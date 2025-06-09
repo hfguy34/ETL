@@ -36,9 +36,11 @@ for job, job_type, runtime in jobs:
     net.add_node(job, label=label, title=title, color=color)
     net.add_edge("Asarco ADF Jobs", job)
 
-# Save and render
+# Save and render using write_html (FIX for Streamlit Cloud)
 with tempfile.NamedTemporaryFile(delete=False, suffix=".html") as tmp_file:
     tmp_path = tmp_file.name
-    net.show(tmp_path)
-    components.html(open(tmp_path, 'r', encoding='utf-8').read(), height=750)
+    net.write_html(tmp_path)
+    with open(tmp_path, 'r', encoding='utf-8') as f:
+        html_content = f.read()
+    components.html(html_content, height=750)
     os.remove(tmp_path)
