@@ -6,7 +6,7 @@ import os
 
 # ETL Job definitions
 jobs = [
-    ("PL_FULLLOAD_OMS_TABLES", "Full Load", "Run time "4),
+    ("PL_FULLLOAD_OMS_TABLES", "Full Load", "Run time ",4),
     ("PL_BSEG", "Incremental Load", 30),
     ("PL_DYNAMIC_FULLLOAD_JOB_4", "Full Load", 55),
     ("PL_COBK, PL_COSS, PL_COEP, PL_COSP, PL_JCDS", "Incremental Load", 90),
