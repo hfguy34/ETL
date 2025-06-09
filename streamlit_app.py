@@ -20,46 +20,47 @@ jobs = [
     ("PL_DYNAMIC_FULLLOAD_JOB_2", "Full Load", 25),
 ]
 
-# Streamlit page setup
+# Streamlit UI setup
 st.set_page_config(page_title="ADF Lineage Flow", layout="wide")
-st.title("Interactive ETL Lineage Flow - Asarco ADF Jobs")
+st.title("Interactive ETL Lineage Flow -  ADF Jobs")
 
-# Initialize pyvis Network with hierarchical layout
+# Initialize PyVis Network
 net = Network(height='750px', width='100%', bgcolor='#1e1e1e', font_color='white', directed=True)
 
+# Apply corrected JSON-based hierarchical layout options
 net.set_options("""
-const options = {
-  layout: {
-    hierarchical: {
-      enabled: true,
-      direction: "LR",
-      sortMethod: "directed"
+{
+  "layout": {
+    "hierarchical": {
+      "enabled": true,
+      "direction": "LR",
+      "sortMethod": "directed"
     }
   },
-  edges: {
-    arrows: {
-      to: {enabled: true}
+  "edges": {
+    "arrows": {
+      "to": {"enabled": true}
     },
-    smooth: false
+    "smooth": false
   },
-  nodes: {
-    shape: "dot",
-    size: 18,
-    font: {
-      size: 14,
-      color: "white"
+  "nodes": {
+    "shape": "dot",
+    "size": 18,
+    "font": {
+      "size": 14,
+      "color": "white"
     }
   },
-  physics: {
-    enabled: false
+  "physics": {
+    "enabled": false
   }
 }
 """)
 
-# Add central node
+# Add root node
 net.add_node("Asarco ADF Jobs", shape='dot', size=30, color='skyblue', title="ADF Root Job")
 
-# Add job nodes
+# Add job nodes and edges
 for job, job_type, runtime in jobs:
     color = "green" if job_type == "Incremental Load" else "orange"
     label = f"{job} ({job_type})"
@@ -67,7 +68,7 @@ for job, job_type, runtime in jobs:
     net.add_node(job, label=label, title=title, color=color)
     net.add_edge("Asarco ADF Jobs", job)
 
-# Render and display in Streamlit
+# Display the graph in Streamlit using HTML component
 with tempfile.NamedTemporaryFile(delete=False, suffix=".html") as tmp_file:
     tmp_path = tmp_file.name
     net.write_html(tmp_path)
