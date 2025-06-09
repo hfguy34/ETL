@@ -41,7 +41,11 @@ net.set_options("""
     "arrows": {
       "to": {"enabled": true}
     },
-    "smooth": false
+    "smooth": {
+      "enabled": true,
+      "type": "curvedCW",
+      "roundness": 0.5
+    }
   },
   "nodes": {
     "shape": "dot",
